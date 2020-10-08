@@ -71,11 +71,31 @@ class PaginaDetalhe extends StatefulWidget {
 }
 
 class _PaginaDetalheState extends State<PaginaDetalhe> {
+  bool mostraExpandido = true;
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: widget.poke.id,
-      child: Image.network(widget.poke.imageUrl),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.poke.name),
+        centerTitle: true,
+      ),
+      body: GestureDetector(
+        onTap: () => {
+          setState(() {
+            mostraExpandido = !mostraExpandido;
+          })
+        },
+        child: Center(
+          child: Hero(
+            tag: widget.poke.id,
+            child: Image.network(
+              mostraExpandido
+                  ? widget.poke.imageUrl1HiRes
+                  : widget.poke.imageUrl,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
