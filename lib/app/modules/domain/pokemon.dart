@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 
 class Pokemon {
-
   final String id;
   final List<dynamic> types;
   final String imageUrl;
@@ -15,4 +16,19 @@ class Pokemon {
     @required this.name,
     @required this.types,
   });
+
+  String toJson() {
+    Map<String, dynamic> json = _fromMapJson();
+    return jsonEncode(json);
+  }
+
+  Map<String, dynamic> _fromMapJson() {
+    return {
+      'id': id,
+      'types': types,
+      'imageUrl': imageUrl,
+      'imageUrl1HiRes': imageUrl1HiRes,
+      'name': name,
+    };
+  }
 }

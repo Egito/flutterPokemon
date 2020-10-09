@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedio/app/modules/domain/pokemon.dart';
+import 'package:pokedio/app/modules/home/pokemon_repository.dart';
+import 'package:pokedio/app/modules/home/home_module.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -72,12 +74,20 @@ class PaginaDetalhe extends StatefulWidget {
 
 class _PaginaDetalheState extends State<PaginaDetalhe> {
   bool mostraExpandido = true;
+  final PokemonRepository repository = HomeModule.to.get<PokemonRepository>();
+  GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
       appBar: AppBar(
         title: Text(widget.poke.name),
         centerTitle: true,
+        actions: [
+          IconButton(icon: Icon(Icons.favorite), onPressed: null),
+          IconButton(
+              icon: Icon(Icons.person_add), onPressed: () => adicionaLista())
+        ],
       ),
       body: GestureDetector(
         onTap: () => {
@@ -96,6 +106,13 @@ class _PaginaDetalheState extends State<PaginaDetalhe> {
           ),
         ),
       ),
+    );
+  }
+
+  adicionaLista() {
+    repository.adicionaLista(widget.poke);
+    _key.currentState.showSnackBar(
+      SnackBar(content: Text("Guardado!")),
     );
   }
 }
