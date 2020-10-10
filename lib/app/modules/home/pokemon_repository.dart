@@ -38,9 +38,12 @@ class PokemonRepository extends Disposable {
     return pokemons.map<Pokemon>((json) => Pokemon.fromJson(json)).toList();
   }
 
-  Future fetchPost() async {
-    final response =
-        await client.get('https://jsonplaceholder.typicode.com/posts/1');
-    return response.data;
+  Future<List<Pokemon>> getAllPokemons() async {
+    final response = await client.get('https://api.pokemontcg.io/v1/cards');
+    if (response != null && response.statusCode <= 300) {
+      var pokes = response.data['cards'];
+      return pokes.map<Pokemon>((json) => Pokemon.fromMapJson(json)).toList();
+    }
+    return [];
   }
 }

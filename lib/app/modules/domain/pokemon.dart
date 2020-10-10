@@ -6,13 +6,13 @@ class Pokemon {
   final String id;
   final List<dynamic> types;
   final String imageUrl;
-  final String imageUrl1HiRes;
+  final String imageUrlHiRes;
   final String name;
 
   Pokemon({
     @required this.id,
     @required this.imageUrl,
-    @required this.imageUrl1HiRes,
+    @required this.imageUrlHiRes,
     @required this.name,
     @required this.types,
   });
@@ -27,17 +27,21 @@ class Pokemon {
       'id': id,
       'types': types,
       'imageUrl': imageUrl,
-      'imageUrl1HiRes': imageUrl1HiRes,
+      'imageUrlHiRes': imageUrlHiRes,
       'name': name,
     };
   }
 
   static Pokemon fromJson(String json) {
     Map<String, dynamic> map = jsonDecode(json);
+    return fromMapJson(map);
+  }
+
+  static Pokemon fromMapJson(Map<String, dynamic> map) {
     return Pokemon(
       id: map['id'],
       imageUrl: map['imageUrl'],
-      imageUrl1HiRes: map['imageUrl1HiRes'],
+      imageUrlHiRes: map['imageUrlHiRes'],
       name: map['name'],
       types: map['types'],
     );

@@ -11,26 +11,20 @@ class CardsPage extends StatefulWidget {
 }
 
 class _CardsPageState extends ModularState<CardsPage, HomeController> {
-  List<Pokemon> pokemons = [
-    Pokemon(
-        id: "neo4",
-        name: "Neo Destiny",
-        imageUrl: "https://images.pokemontcg.io/neo4/symbol.png",
-        imageUrl1HiRes: "https://images.pokemontcg.io/neo4/logo.png",
-        types: ["Lightning"]),
-    Pokemon(
-        id: "neo3",
-        name: "Neo Revelation",
-        imageUrl: "https://images.pokemontcg.io/neo3/symbol.png",
-        imageUrl1HiRes: "https://images.pokemontcg.io/neo3/logo.png",
-        types: ["Lightning"]),
-    Pokemon(
-        id: "si1",
-        name: "Southern Islands",
-        imageUrl: "https://images.pokemontcg.io/si1/symbol.png",
-        imageUrl1HiRes: "https://images.pokemontcg.io/si1/logo.png",
-        types: ["Lightning"]),
-  ];
+  final PokemonRepository repository = HomeModule.to.get<PokemonRepository>();
+  List<Pokemon> pokemons = [];
+
+  void initState() {
+    loadPokemons();
+    super.initState();
+  }
+
+  void loadPokemons() async {
+    var allPokemons = await repository.getAllPokemons();
+    setState(() {
+      pokemons = allPokemons;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +80,7 @@ class _PaginaDetalheState extends State<PaginaDetalhe> {
         actions: [
           IconButton(icon: Icon(Icons.favorite), onPressed: null),
           IconButton(
-              icon: Icon(Icons.person_add), onPressed: () => adicionaLista())
+              icon: Icon(Icons.person_add), onPressed: () => adicionaLista()),
         ],
       ),
       body: GestureDetector(
@@ -100,7 +94,7 @@ class _PaginaDetalheState extends State<PaginaDetalhe> {
             tag: widget.poke.id,
             child: Image.network(
               mostraExpandido
-                  ? widget.poke.imageUrl1HiRes
+                  ? widget.poke.imageUrlHiRes
                   : widget.poke.imageUrl,
             ),
           ),
