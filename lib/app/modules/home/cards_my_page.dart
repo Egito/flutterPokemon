@@ -41,7 +41,7 @@ class _CardsMyPageState extends ModularState<CardsMyPage, HomeController> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
               child: Hero(
-                tag: poke.id,
+                tag: poke.uniqueId,
                 child: Image.network(poke.imageUrl),
               ),
             ),

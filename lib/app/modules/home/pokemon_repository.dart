@@ -23,9 +23,9 @@ class PokemonRepository extends Disposable {
     var pokemons = shared.getStringList(GUARDADOS_KEY);
 
     if (pokemons == null || pokemons.isEmpty) {
-      shared.setStringList(GUARDADOS_KEY, [poke.toJson()]);
+      shared.setStringList(GUARDADOS_KEY, [poke.toJson(CardType.Selecao)]);
     } else {
-      pokemons.add(poke.toJson());
+      pokemons.add(poke.toJson(CardType.Selecao));
       shared.setStringList(GUARDADOS_KEY, pokemons);
     }
   }
@@ -35,7 +35,28 @@ class PokemonRepository extends Disposable {
     var pokemons = shared.getStringList(GUARDADOS_KEY);
 
     if (pokemons == null) return [];
-    return pokemons.map<Pokemon>((json) => Pokemon.fromJson(json)).toList();
+    await atualizaListaAntiga(pokemons);
+    return shared
+        .getStringList(GUARDADOS_KEY)
+        .map<Pokemon>((json) => Pokemon.fromJson(json))
+        .toList();
+  }
+
+// Atualizando os pokes ja guardados
+  atualizaListaAntiga(List<String> pokemons) async {
+    var pokesAntigos =
+        pokemons.map<Pokemon>((e) => Pokemon.fromJson(e)).toList();
+
+    var dRecarr = pokesAntigos.firstWhere((e) => e.cardType == CardType.Publico,
+        orElse: () => null);
+
+    if (dRecarr != null) {
+      var shared = await SharedPreferences.getInstance();
+      shared.setStringList(GUARDADOS_KEY, []);
+      for (Pokemon poke in pokesAntigos) {
+        await adicionaLista(poke);
+      }
+    }
   }
 
   Future<List<Pokemon>> getAllPokemons() async {

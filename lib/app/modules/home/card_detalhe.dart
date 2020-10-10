@@ -37,7 +37,7 @@ class _PaginaDetalheState extends State<PaginaDetalhe> {
         },
         child: Center(
           child: Hero(
-            tag: widget.poke.id,
+            tag: widget.poke.uniqueId,
             child: Image.network(
               mostraExpandido
                   ? widget.poke.imageUrlHiRes
