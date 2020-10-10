@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedio/app/modules/domain/pokemon.dart';
+import 'package:pokedio/app/modules/home/card_detalhe.dart';
 import 'package:pokedio/app/modules/home/cards_page.dart';
 import 'package:pokedio/app/modules/home/pokemon_repository.dart';
 import 'package:pokedio/app/modules/home/home_module.dart';

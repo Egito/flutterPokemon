@@ -21,20 +21,22 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pags[_currIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currIndex,
-        onTap: (index) => trocaPag(index),
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.all_inclusive), title: Text('Cards')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), title: Text('Favoritos')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('Guadados')),
-        ],
-      ),
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currIndex,
+          onTap: (index) => trocaPag(index),
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.all_inclusive), title: Text('Cards')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), title: Text('Favoritos')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person), title: Text('Guadados')),
+          ],
+        ),
+        body: IndexedStack(
+          index: _currIndex,
+          children: pags,
+        ));
   }
 
   trocaPag(i) {
