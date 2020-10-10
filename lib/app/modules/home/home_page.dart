@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:pokedio/app/modules/home/cards_my_page.dart';
 import 'package:pokedio/app/modules/home/cards_page.dart';
 import 'home_controller.dart';
 
@@ -14,7 +15,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   List<Widget> pags = [
     CardsPage(),
     Container(),
-    Container(),
+    CardsMyPage(),
   ];
 
   @override

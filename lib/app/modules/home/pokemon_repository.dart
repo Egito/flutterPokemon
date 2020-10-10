@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+
 import 'package:dio/native_imp.dart';
 import 'package:pokedio/app/modules/domain/pokemon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,8 +28,14 @@ class PokemonRepository extends Disposable {
       pokemons.add(poke.toJson());
       shared.setStringList(GUARDADOS_KEY, pokemons);
     }
+  }
 
-    print(shared.getStringList(GUARDADOS_KEY));
+  Future<List<Pokemon>> getPokeGuardados() async {
+    var shared = await SharedPreferences.getInstance();
+    var pokemons = shared.getStringList(GUARDADOS_KEY);
+
+    if (pokemons == null) return [];
+    return pokemons.map<Pokemon>((json) => Pokemon.fromJson(json)).toList();
   }
 
   Future fetchPost() async {
