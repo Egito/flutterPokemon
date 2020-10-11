@@ -30,7 +30,7 @@ class PokemonRepository extends Disposable {
     }
   }
 
-  Future<List<Pokemon>> getPokeGuardados() async {
+  Future<List<Pokemon>> getSelPokemons() async {
     var shared = await SharedPreferences.getInstance();
     var pokemons = shared.getStringList(GUARDADOS_KEY);
 

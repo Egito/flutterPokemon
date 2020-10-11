@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedio/app/modules/domain/pokemon.dart';
 import 'package:pokedio/app/modules/home/card_detalhe.dart';
-import 'package:pokedio/app/modules/home/pokemon_repository.dart';
-import 'package:pokedio/app/modules/home/home_module.dart';
 import 'home_controller.dart';
 
 class CardsPage extends StatefulWidget {
@@ -12,8 +10,7 @@ class CardsPage extends StatefulWidget {
 }
 
 class _CardsPageState extends ModularState<CardsPage, HomeController> {
-  final PokemonRepository repository = HomeModule.to.get<PokemonRepository>();
-  List<Pokemon> pokemons = [];
+  List<Pokemon> pokes = [];
 
   void initState() {
     loadPokemons();
@@ -21,9 +18,9 @@ class _CardsPageState extends ModularState<CardsPage, HomeController> {
   }
 
   void loadPokemons() async {
-    var allPokemons = await repository.getAllPokemons();
+    var allPokes = await controller.getAllPokemons();
     setState(() {
-      pokemons = allPokemons;
+      pokes = allPokes;
     });
   }
 
@@ -33,8 +30,8 @@ class _CardsPageState extends ModularState<CardsPage, HomeController> {
       body: GridView.count(
         childAspectRatio: 0.72,
         crossAxisCount: 2,
-        children: List.generate(pokemons.length, (index) {
-          var poke = pokemons[index];
+        children: List.generate(pokes.length, (index) {
+          var poke = pokes[index];
           return GestureDetector(
             onTap: () => detalharPokemon(poke),
             child: Padding(

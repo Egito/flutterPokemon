@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedio/app/modules/domain/pokemon.dart';
+import 'package:pokedio/app/modules/home/home_controller.dart';
 import 'package:pokedio/app/modules/home/home_module.dart';
-import 'package:pokedio/app/modules/home/pokemon_repository.dart';
 
 class PaginaDetalhe extends StatefulWidget {
   final Pokemon poke;
@@ -14,8 +14,11 @@ class PaginaDetalhe extends StatefulWidget {
 
 class _PaginaDetalheState extends State<PaginaDetalhe> {
   bool mostraExpandido = true;
-  final PokemonRepository repository = HomeModule.to.get<PokemonRepository>();
+
+  final HomeController controller = HomeModule.to.get<HomeController>();
+
   GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +53,7 @@ class _PaginaDetalheState extends State<PaginaDetalhe> {
   }
 
   adicionaLista() {
-    repository.adicionaLista(widget.poke);
+    controller.adicionaLista(widget.poke);
     _key.currentState.showSnackBar(
       SnackBar(content: Text("Guardado!")),
     );
